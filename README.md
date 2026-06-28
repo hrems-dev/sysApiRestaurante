@@ -11,8 +11,8 @@ Construccion de Sisytema
 [ 1 - modulos](docs/modulos.md)<br>
 [ 2 - bloques](docs/modulos.md) <br>
 | [ a - bloque](docs/blocs/1-bloque.md) <br>
-| [ b - bloque](docs/blocs/1-bloque.md) <br>
-| [ c - bloque](docs/blocs/1-bloque.md)
+| [ b - bloque](docs/blocs/2-bloque.md) <br>
+| [ c - bloque](docs/blocs/3-bloque.md)
 
 ## Base de datos
 
