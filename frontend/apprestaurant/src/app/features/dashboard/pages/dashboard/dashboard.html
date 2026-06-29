@@ -1,1 +1,71 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h2>Gestión de lugares y QR</h2>
+
+  <div class="card">
+    <h3>Registrar lugar de atención</h3>
+    <form [formGroup]="lugarForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label>Nombre</label>
+        <input type="text" formControlName="nombreLugar" />
+      </div>
+
+      <div>
+        <label>Tipo</label>
+        <select formControlName="tipoLugar">
+          <option value="mesa">Mesa</option>
+          <option value="salon">Salón</option>
+          <option value="terraza">Terraza</option>
+          <option value="recojo">Recojo</option>
+          <option value="despacho">Despacho</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Dirección</label>
+        <input type="text" formControlName="direccion" />
+      </div>
+
+      <div>
+        <label>Capacidad máxima</label>
+        <input type="number" formControlName="capacidadMaxima" />
+      </div>
+
+      <div>
+        <label>Observación</label>
+        <input type="text" formControlName="observacion" />
+      </div>
+
+      <div>
+        <label>
+          <input type="checkbox" formControlName="estadoLugar" />
+          Activo
+        </label>
+      </div>
+
+      <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+      <p *ngIf="successMsg" class="success">{{ successMsg }}</p>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Guardando...' : 'Guardar lugar' }}
+      </button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Lugares registrados</h3>
+    <ul>
+      <li *ngFor="let lugar of lugares">
+        <strong>{{ lugar.nombreLugar }}</strong> — {{ lugar.tipoLugar }}
+        <span *ngIf="lugar.estadoLugar">Activo</span>
+        <span *ngIf="!lugar.estadoLugar">Inactivo</span>
+        <button type="button" (click)="generarQR(lugar.idLugar)">Generar QR</button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card" *ngIf="qrGenerado">
+    <h3>QR generado</h3>
+    <p><strong>Código:</strong> {{ qrGenerado.codigoQR }}</p>
+    <p><strong>URL:</strong> {{ qrGenerado.urlQR }}</p>
+  </div>
+</div>
