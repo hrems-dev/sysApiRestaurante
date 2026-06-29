@@ -1,0 +1,42 @@
+<div class="auth-container">
+  <h2>Iniciar sesión</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Usuario</label>
+      <input type="text" formControlName="username" />
+      <small
+        *ngIf="
+          loginForm.get('username')?.touched &&
+          loginForm.get('username')?.invalid
+        "
+      >
+        Usuario requerido.
+      </small>
+    </div>
+
+    <div>
+      <label>Contraseña</label>
+      <input type="password" formControlName="password" />
+      <small
+        *ngIf="
+          loginForm.get('password')?.touched &&
+          loginForm.get('password')?.invalid
+        "
+      >
+        Contraseña requerida.
+      </small>
+    </div>
+
+    <p *ngIf="errorMsg">{{ errorMsg }}</p>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? "Ingresando..." : "Login" }}
+    </button>
+  </form>
+
+  <p>
+    ¿No tienes cuenta?
+    <a routerLink="/auth/register">Regístrate</a>
+  </p>
+</div>

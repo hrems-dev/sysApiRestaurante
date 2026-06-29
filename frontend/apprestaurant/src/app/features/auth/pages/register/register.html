@@ -1,0 +1,51 @@
+<div class="auth-container">
+  <h2>Registro</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Usuario</label>
+      <input type="text" formControlName="username" />
+    </div>
+
+    <div>
+      <label>Nombres</label>
+      <input type="text" formControlName="nombres" />
+    </div>
+
+    <div>
+      <label>Apellidos</label>
+      <input type="text" formControlName="apellidos" />
+    </div>
+
+    <div>
+      <label>Email</label>
+      <input type="email" formControlName="email" />
+    </div>
+
+    <div>
+      <label>Contraseña</label>
+      <input type="password" formControlName="password" />
+    </div>
+
+    <div>
+      <label>Teléfono</label>
+      <input type="text" formControlName="telefono" />
+    </div>
+
+    <div>
+      <label>Rol</label>
+      <input type="text" formControlName="rolNombre" />
+    </div>
+
+    <p *ngIf="errorMsg">{{ errorMsg }}</p>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? "Registrando..." : "Registrar" }}
+    </button>
+  </form>
+
+  <p>
+    ¿Ya tienes cuenta?
+    <a routerLink="/auth/login">Inicia sesión</a>
+  </p>
+</div>
