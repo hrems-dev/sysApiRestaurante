@@ -1,42 +1,54 @@
-<div class="auth-container">
-  <h2>Iniciar sesión</h2>
-
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label>Usuario</label>
-      <input type="text" formControlName="username" />
-      <small
-        *ngIf="
-          loginForm.get('username')?.touched &&
-          loginForm.get('username')?.invalid
-        "
-      >
-        Usuario requerido.
-      </small>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">
+        <i class="fa-solid fa-utensils"></i>
+      </div>
+      <h1>Bienvenido</h1>
+      <p class="auth-subtitle">Ingresa a tu cuenta</p>
     </div>
 
-    <div>
-      <label>Contraseña</label>
-      <input type="password" formControlName="password" />
-      <small
-        *ngIf="
-          loginForm.get('password')?.touched &&
-          loginForm.get('password')?.invalid
-        "
-      >
-        Contraseña requerida.
-      </small>
-    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="input-group">
+        <label>
+          <i class="fa-solid fa-user"></i>
+          Usuario
+        </label>
+        <input type="text" formControlName="username" placeholder="tu usuario" />
+        @if (loginForm.get('username')?.touched && loginForm.get('username')?.invalid) {
+          <small class="field-error">Usuario requerido (mín. 3 caracteres)</small>
+        }
+      </div>
 
-    <p *ngIf="errorMsg">{{ errorMsg }}</p>
+      <div class="input-group">
+        <label>
+          <i class="fa-solid fa-lock"></i>
+          Contraseña
+        </label>
+        <input type="password" formControlName="password" placeholder="••••••••" />
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+          <small class="field-error">Contraseña requerida (mín. 6 caracteres)</small>
+        }
+      </div>
 
-    <button type="submit" [disabled]="loading">
-      {{ loading ? "Ingresando..." : "Login" }}
-    </button>
-  </form>
+      @if (errorMsg) {
+        <div class="alert alert-error">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          {{ errorMsg }}
+        </div>
+      }
 
-  <p>
-    ¿No tienes cuenta?
-    <a routerLink="/auth/register">Regístrate</a>
-  </p>
+      <button type="submit" [disabled]="loading" class="btn-auth">
+        @if (loading) {
+          <i class="fa-solid fa-spinner fa-spin"></i> Ingresando...
+        } @else {
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Iniciar Sesión
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      ¿No tienes cuenta? <a routerLink="/auth/register">Regístrate aquí</a>
+    </p>
+  </div>
 </div>

@@ -1,0 +1,23 @@
+<h2>Usuarios</h2>
+<button class="btn-primary" (click)="editing = true; editId = null; form = {nombreUsuario:'',nombres:'',apellidos:'',email:'',telefono:''}">+ Nuevo</button>
+@if (editing) {
+  <div class="form-card">
+    <div class="form-group"><label>Nombre Usuario</label><input [(ngModel)]="form.nombreUsuario" /></div>
+    <div class="form-group"><label>Nombres</label><input [(ngModel)]="form.nombres" /></div>
+    <div class="form-group"><label>Apellidos</label><input [(ngModel)]="form.apellidos" /></div>
+    <div class="form-group"><label>Email</label><input [(ngModel)]="form.email" type="email" /></div>
+    <div class="form-group"><label>Teléfono</label><input [(ngModel)]="form.telefono" /></div>
+    <button class="btn-primary" (click)="save()">Guardar</button>
+    <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+  </div>
+}
+<table>
+  <thead><tr><th>Usuario</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Estado</th><th>Acciones</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idUsuario) {
+      <tr><td>{{ item.nombreUsuario }}</td><td>{{ item.nombres }}</td><td>{{ item.apellidos }}</td><td>{{ item.email }}</td><td>{{ item.estadoUsuario ? 'Activo' : 'Inactivo' }}</td>
+        <td><button (click)="edit(item)">✏️</button><button (click)="delete(item.idUsuario)">🗑️</button></td>
+      </tr>
+    }
+  </tbody>
+</table>

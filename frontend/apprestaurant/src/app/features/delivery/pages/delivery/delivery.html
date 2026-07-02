@@ -1,0 +1,24 @@
+<h2>Delivery</h2>
+<button class="btn-primary" (click)="editing = true; form = {idPedido:0,idRepartidor:0,direccionEntrega:''}">+ Asignar Repartidor</button>
+@if (editing) {
+  <div class="form-card">
+    <div class="form-group"><label>ID Pedido</label><input [(ngModel)]="form.idPedido" type="number" /></div>
+    <div class="form-group"><label>ID Repartidor</label><input [(ngModel)]="form.idRepartidor" type="number" /></div>
+    <div class="form-group"><label>Dirección Entrega</label><input [(ngModel)]="form.direccionEntrega" /></div>
+    <button class="btn-primary" (click)="asignar()">Asignar</button>
+    <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+  </div>
+}
+<table>
+  <thead><tr><th>Pedido</th><th>Repartidor</th><th>Dirección</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idPedido) {
+      <tr><td>{{ item.idPedido }}</td><td>{{ item.nombreRepartidor }}</td><td>{{ item.direccionEntrega }}</td><td>{{ item.estadoPedido }}</td><td>{{ item.fechaHoraPedido }}</td>
+        <td>
+          @if (item.estadoPedido === 'ASIGNADO') { <button (click)="actualizarEstado(item.idPedido, 'EN_CAMINO')">En Camino</button> }
+          @if (item.estadoPedido === 'EN_CAMINO') { <button (click)="actualizarEstado(item.idPedido, 'ENTREGADO')">Entregado</button> }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

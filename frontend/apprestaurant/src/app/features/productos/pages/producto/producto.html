@@ -1,0 +1,72 @@
+<div class="page-header">
+  <h2><i class="fa-solid fa-utensils"></i> Productos</h2>
+  <button class="btn btn-primary" (click)="openNuevo()"><i class="fa-solid fa-plus"></i> Nuevo Producto</button>
+</div>
+
+<app-modal [open]="showModal" (close)="showModal = false" [title]="editId ? 'Editar Producto' : 'Nuevo Producto'">
+  <div class="modal-form">
+    <div class="form-group">
+      <label>Categoría</label>
+      <select [(ngModel)]="form.idCategoria">
+        <option [value]="0">Seleccione</option>
+        @for (c of categorias; track c.idCategoria) {
+          <option [value]="c.idCategoria">{{ c.nombreCategoria }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Nombre</label>
+      <input [(ngModel)]="form.nombreProducto" placeholder="Nombre del producto" />
+    </div>
+    <div class="form-group">
+      <label>Descripción</label>
+      <input [(ngModel)]="form.descripcionProducto" placeholder="Descripción opcional" />
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Precio (S/)</label>
+        <input [(ngModel)]="form.precioProducto" type="number" step="0.01" placeholder="0.00" />
+      </div>
+      <div class="form-group">
+        <label>Stock</label>
+        <input [(ngModel)]="form.stockProducto" type="number" placeholder="0" />
+      </div>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <button class="btn btn-primary" (click)="save()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+    <button class="btn btn-secondary" (click)="showModal = false">Cancelar</button>
+  </div>
+</app-modal>
+
+<table>
+  <thead><tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th>Acciones</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idProducto) {
+      <tr>
+        <td>{{ item.nombreProducto }}</td>
+        <td>{{ item.nombreCategoria }}</td>
+        <td>S/ {{ item.precioProducto }}</td>
+        <td>{{ item.stockProducto }}</td>
+        <td><span class="badge" [class.active]="item.estadoProducto" [class.inactive]="!item.estadoProducto">{{ item.estadoProducto ? 'Activo' : 'Inactivo' }}</span></td>
+        <td class="actions-cell">
+          <button class="btn-icon" (click)="editar(item)" title="Editar"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn-icon" (click)="delete(item.idProducto)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+          <button class="btn-icon" (click)="updatingStock = true; stockProductoId = item.idProducto; stockValue = item.stockProducto" title="Actualizar stock"><i class="fa-solid fa-boxes"></i></button>
+        </td>
+      </tr>
+      @if (updatingStock && stockProductoId === item.idProducto) {
+        <tr class="stock-row">
+          <td colspan="6">
+            <div class="inline-stock">
+              <span>Nuevo stock:</span>
+              <input [(ngModel)]="stockValue" type="number" placeholder="Nuevo stock" />
+              <button class="btn btn-primary btn-sm" (click)="actualizarStock(item.idProducto)">Actualizar</button>
+              <button class="btn btn-secondary btn-sm" (click)="updatingStock = false; stockProductoId = null">Cancelar</button>
+            </div>
+          </td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>

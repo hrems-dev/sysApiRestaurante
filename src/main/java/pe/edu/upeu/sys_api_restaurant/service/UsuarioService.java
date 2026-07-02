@@ -1,13 +1,13 @@
 package pe.edu.upeu.sys_api_restaurant.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.edu.upeu.sys_api_restaurant.entity.Usuario;
 import pe.edu.upeu.sys_api_restaurant.exception.ResourceNotFoundException;
 import pe.edu.upeu.sys_api_restaurant.repository.UsuarioRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,27 +15,25 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    // Obtiene todos los registros de Usuario
     @Transactional(readOnly = true)
     public List<Usuario> findAll() {
         return repository.findAll();
     }
 
-    // Busca un Usuario por su ID, lanza excepción si no existe
     @Transactional(readOnly = true)
     public Usuario findById(Integer id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + id));
     }
 
-    // Guarda un nuevo Usuario
     @Transactional
     public Usuario save(Usuario usuario) {
+        usuario.setPasswordHash(passwordEncoder.encode(usuario.getPasswordHash()));
         return repository.save(usuario);
     }
 
-    // Actualiza un Usuario existente buscándolo por ID y mapeando campos nuevos
     @Transactional
     public Usuario update(Integer id, Usuario usuario) {
         Usuario existing = findById(id);
@@ -44,13 +42,18 @@ public class UsuarioService {
         existing.setNombres(usuario.getNombres());
         existing.setApellidos(usuario.getApellidos());
         existing.setEmail(usuario.getEmail());
-        existing.setPasswordHash(usuario.getPasswordHash());
         existing.setTelefono(usuario.getTelefono());
         existing.setEstadoUsuario(usuario.getEstadoUsuario());
+        if (usuario.getPasswordHash() != null && !usuario.getPasswordHash().isBlank()) {
+            if (!usuario.getPasswordHash().startsWith("$2")) {
+                existing.setPasswordHash(passwordEncoder.encode(usuario.getPasswordHash()));
+            } else {
+                existing.setPasswordHash(usuario.getPasswordHash());
+            }
+        }
         return repository.save(existing);
     }
 
-    // Elimina un Usuario por su ID
     @Transactional
     public void delete(Integer id) {
         Usuario existing = findById(id);

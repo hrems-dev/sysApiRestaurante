@@ -48,6 +48,9 @@ public class Usuario implements UserDetails {
     @Column(length = 20)
     private String telefono;
 
+    @Column(length = 20, unique = true)
+    private String codigoEmpleado;
+
     @Column(nullable = false)
     private Boolean estadoUsuario;
 

@@ -1,0 +1,29 @@
+<h2>Códigos QR por Mesa/Lugar</h2>
+<button class="btn-primary" (click)="editing = true">+ Generar QR</button>
+@if (editing) {
+  <div class="form-card">
+    <div class="form-group"><label>Lugar</label>
+      <select [(ngModel)]="form.idLugar">
+        <option value="0">Seleccione</option>
+        @for (l of lugares; track l.idLugar) {
+          <option [value]="l.idLugar">{{ l.nombreLugar }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group"><label>Código QR</label><input [(ngModel)]="form.codigoQR" /></div>
+    <div class="form-group"><label>URL</label><input [(ngModel)]="form.urlQR" /></div>
+    <button class="btn-primary" (click)="generarQR()">Generar</button>
+    <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+  </div>
+}
+@if (mensaje) { <p class="msg">{{ mensaje }}</p> }
+<table>
+  <thead><tr><th>Lugar</th><th>Código QR</th><th>URL</th><th>Estado</th><th>Acciones</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idQR) {
+      <tr><td>{{ item.nombreLugar }}</td><td>{{ item.codigoQR }}</td><td>{{ item.urlQR }}</td><td>{{ item.estadoQR ? 'Activo' : 'Inactivo' }}</td>
+        <td><button (click)="desactivar(item.idQR)">Desactivar</button></td>
+      </tr>
+    }
+  </tbody>
+</table>

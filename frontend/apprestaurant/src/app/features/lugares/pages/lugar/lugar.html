@@ -1,0 +1,23 @@
+<h2>Lugares de Atención</h2>
+<button class="btn-primary" (click)="editing = true; editId = null; form = {nombreLugar:'',tipoLugar:'',direccion:'',capacidadMaxima:0,observacion:''}">+ Nuevo</button>
+@if (editing) {
+  <div class="form-card">
+    <div class="form-group"><label>Nombre</label><input [(ngModel)]="form.nombreLugar" /></div>
+    <div class="form-group"><label>Tipo</label><input [(ngModel)]="form.tipoLugar" /></div>
+    <div class="form-group"><label>Dirección</label><input [(ngModel)]="form.direccion" /></div>
+    <div class="form-group"><label>Capacidad Máxima</label><input [(ngModel)]="form.capacidadMaxima" type="number" /></div>
+    <div class="form-group"><label>Observación</label><input [(ngModel)]="form.observacion" /></div>
+    <button class="btn-primary" (click)="save()">Guardar</button>
+    <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+  </div>
+}
+<table>
+  <thead><tr><th>Nombre</th><th>Tipo</th><th>Dirección</th><th>Capacidad</th><th>Estado</th><th>Acciones</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idLugar) {
+      <tr><td>{{ item.nombreLugar }}</td><td>{{ item.tipoLugar }}</td><td>{{ item.direccion }}</td><td>{{ item.capacidadMaxima }}</td><td>{{ item.estadoLugar ? 'Activo' : 'Inactivo' }}</td>
+        <td><button (click)="edit(item)">✏️</button><button (click)="delete(item.idLugar)">🗑️</button></td>
+      </tr>
+    }
+  </tbody>
+</table>

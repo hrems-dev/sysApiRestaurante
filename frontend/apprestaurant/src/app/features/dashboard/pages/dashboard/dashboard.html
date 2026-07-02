@@ -1,1 +1,147 @@
-<p>dashboard works!</p>
+<div class="page-header">
+  <h2><i class="fa-solid fa-gauge-high"></i> Dashboard</h2>
+  <p>Resumen general del sistema</p>
+</div>
+
+<div class="stats-grid">
+  <a class="stat-card stat-pedidos" routerLink="/sistema/pedidos">
+    <div class="stat-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+    <div class="stat-info">
+      <span class="stat-value">{{ totalPedidos }}</span>
+      <span class="stat-label">Pedidos</span>
+    </div>
+  </a>
+  <a class="stat-card stat-ventas" routerLink="/sistema/ventas">
+    <div class="stat-icon"><i class="fa-solid fa-file-invoice"></i></div>
+    <div class="stat-info">
+      <span class="stat-value">{{ totalVentas }}</span>
+      <span class="stat-label">Ventas</span>
+    </div>
+  </a>
+  <a class="stat-card stat-productos" routerLink="/sistema/productos">
+    <div class="stat-icon"><i class="fa-solid fa-utensils"></i></div>
+    <div class="stat-info">
+      <span class="stat-value">{{ totalProductos }}</span>
+      <span class="stat-label">Productos</span>
+    </div>
+  </a>
+  <a class="stat-card stat-usuarios" routerLink="/sistema/usuarios">
+    <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+    <div class="stat-info">
+      <span class="stat-value">{{ totalUsuarios }}</span>
+      <span class="stat-label">Usuarios</span>
+    </div>
+  </a>
+</div>
+
+<div class="quick-actions">
+  <h3>Acceso Rápido</h3>
+  <div class="actions-grid">
+    <a class="action-btn" routerLink="/sistema/pedidos">
+      <i class="fa-solid fa-clipboard-list"></i>
+      <span>Pedidos</span>
+    </a>
+    <a class="action-btn" routerLink="/sistema/productos">
+      <i class="fa-solid fa-utensils"></i>
+      <span>Productos</span>
+    </a>
+    <a class="action-btn" routerLink="/sistema/categorias">
+      <i class="fa-solid fa-folder-tree"></i>
+      <span>Categorías</span>
+    </a>
+    <a class="action-btn" routerLink="/sistema/lugares">
+      <i class="fa-solid fa-location-dot"></i>
+      <span>Lugares</span>
+    </a>
+    <a class="action-btn" routerLink="/sistema/mesas-qr">
+      <i class="fa-solid fa-qrcode"></i>
+      <span>Mesas QR</span>
+    </a>
+    <a class="action-btn" routerLink="/sistema/reservas">
+      <i class="fa-solid fa-calendar-check"></i>
+      <span>Reservas</span>
+    </a>
+    <a class="action-btn" routerLink="/sistema/pagos">
+      <i class="fa-solid fa-credit-card"></i>
+      <span>Pagos</span>
+    </a>
+    <a class="action-btn" routerLink="/sistema/usuarios">
+      <i class="fa-solid fa-users"></i>
+      <span>Usuarios</span>
+    </a>
+    <a class="action-btn" routerLink="/sistema/ventas">
+      <i class="fa-solid fa-file-invoice"></i>
+      <span>Ventas</span>
+    </a>
+    <a class="action-btn" routerLink="/sistema/reportes">
+      <i class="fa-solid fa-chart-simple"></i>
+      <span>Reportes</span>
+    </a>
+  </div>
+</div>
+
+<div class="dashboard-footer">
+  <div class="footer-card">
+    <div class="card-header">
+      <i class="fa-solid fa-file-excel"></i>
+      <h3>Importar Datos desde Excel</h3>
+    </div>
+
+    <p class="import-desc">
+      Sube un archivo Excel (.xlsx) con hojas <strong>CATEGORIAS</strong>, <strong>PRODUCTOS</strong> y/o <strong>LUGARES</strong> para precargar datos básicos.
+    </p>
+
+    <div class="template-download">
+      <button class="btn btn-template" (click)="descargarPlantilla()">
+        <i class="fa-solid fa-download"></i> Descargar Plantilla Excel
+      </button>
+    </div>
+
+    <div class="excel-upload-area">
+      <input type="file" accept=".xlsx,.xls" (change)="onFileChange($event)" id="excelInput" hidden />
+      <label for="excelInput" class="upload-dropzone">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <span>{{ excelFile ? excelFile.name : 'Haz clic para seleccionar archivo Excel' }}</span>
+        @if (excelFile) {
+          <small>({{ (excelFile.size / 1024).toFixed(1) }} KB)</small>
+        }
+      </label>
+    </div>
+
+    @if (excelFile) {
+      <button class="btn btn-excel" (click)="importarExcel()" [disabled]="excelLoading">
+        @if (excelLoading) {
+          <i class="fa-solid fa-spinner fa-spin"></i> Importando...
+        } @else {
+          <i class="fa-solid fa-file-import"></i> Importar Excel
+        }
+      </button>
+    }
+
+    @if (excelResultado) {
+      <div class="excel-resultado" [class.success]="excelResultado.totalErrores === 0" [class.warning]="excelResultado.totalErrores > 0">
+        <div class="result-header">
+          <i class="fa-solid" [class.fa-circle-check]="excelResultado.totalErrores === 0" [class.fa-circle-exclamation]="excelResultado.totalErrores > 0"></i>
+          <span>{{ excelResultado.mensaje }}</span>
+        </div>
+        <div class="result-stats">
+          <span class="stat-badge importados">
+            <i class="fa-solid fa-check"></i> {{ excelResultado.totalImportados }} importados
+          </span>
+          @if (excelResultado.totalErrores > 0) {
+            <span class="stat-badge errores">
+              <i class="fa-solid fa-times"></i> {{ excelResultado.totalErrores }} errores
+            </span>
+          }
+        </div>
+        @if (excelResultado.errores && excelResultado.errores.length > 0) {
+          <ul class="error-list">
+            @for (err of excelResultado.errores; track $index) {
+              <li>{{ err }}</li>
+            }
+          </ul>
+        }
+      </div>
+    }
+  </div>
+</div>

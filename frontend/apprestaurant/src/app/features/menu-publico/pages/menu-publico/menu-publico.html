@@ -1,0 +1,116 @@
+<div class="menu-page">
+  <header class="menu-header">
+    <div class="header-content">
+      <div class="header-brand">
+        <i class="fa-solid fa-utensils"></i>
+        <h1>Menú del Día</h1>
+      </div>
+      <p class="header-subtitle">Selecciona tus productos y realiza tu pedido</p>
+    </div>
+  </header>
+
+  <div class="menu-body">
+    <aside class="menu-sidebar">
+      <div class="sidebar-card mesa-card">
+        <h3><i class="fa-solid fa-chair"></i> Identifica tu Mesa</h3>
+
+        <div class="mesa-scanner" *ngIf="!mesaIdentificada">
+          <div class="scanner-options">
+            <button class="btn btn-scanner" (click)="iniciarScanner()" [disabled]="scannerActivo">
+              <i class="fa-solid fa-camera"></i> Escanear QR
+            </button>
+            <div class="divider">o</div>
+            <div class="input-group">
+              <input [(ngModel)]="mesaManual" placeholder="N° de mesa" />
+              <button class="btn btn-sm" (click)="identificarMesa()">
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="qr-reader" *ngIf="scannerActivo"></div>
+
+        <div class="mesa-identificada" *ngIf="mesaIdentificada">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Mesa <strong>{{ mesaIdentificada }}</strong></span>
+          <button class="btn btn-link" (click)="mesaIdentificada = ''; carrito = []; pedidoEnviado = false">
+            Cambiar
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-card carrito-card" *ngIf="carrito.length > 0">
+        <h3><i class="fa-solid fa-cart-shopping"></i> Tu Pedido</h3>
+        <ul class="carrito-lista">
+          @for (item of carrito; track item.producto.idProducto) {
+            <li class="carrito-item">
+              <div class="item-info">
+                <span class="item-nombre">{{ item.producto.nombreProducto }}</span>
+                <span class="item-precio">S/ {{ (item.producto.precioProducto * item.cantidad).toFixed(2) }}</span>
+              </div>
+              <div class="item-cantidad">
+                <button class="btn-qty" (click)="quitarDelCarrito(item.producto)">-</button>
+                <span>{{ item.cantidad }}</span>
+                <button class="btn-qty" (click)="agregarAlCarrito(item.producto)">+</button>
+              </div>
+            </li>
+          }
+        </ul>
+        <div class="carrito-total">
+          <span>Total</span>
+          <span class="total-valor">S/ {{ totalCarrito().toFixed(2) }}</span>
+        </div>
+        <button class="btn btn-primary btn-enviar" (click)="enviarPedido()" [disabled]="loading || !mesaIdentificada">
+          @if (loading) {
+            <i class="fa-solid fa-spinner fa-spin"></i> Enviando...
+          } @else {
+            <i class="fa-solid fa-paper-plane"></i> Enviar Pedido
+          }
+        </button>
+      </div>
+
+      @if (pedidoEnviado) {
+        <div class="sidebar-card exito-card">
+          <i class="fa-solid fa-circle-check"></i>
+          <h3>¡Pedido Enviado!</h3>
+          <p>Tu pedido está siendo procesado.</p>
+        </div>
+      }
+    </aside>
+
+    <main class="menu-main">
+      @if (noDisponible) {
+        <div class="no-disponible">
+          <i class="fa-solid fa-circle-info"></i>
+          <h3>Menú no disponible</h3>
+          <p>El menú del día aún no está disponible. Vuelve más tarde.</p>
+        </div>
+      }
+      @for (grupo of productosPorCategoria; track grupo.categoria) {
+        <section class="categoria-section">
+          <h2 class="categoria-titulo">
+            <i class="fa-solid fa-folder-open"></i>
+            {{ grupo.categoria }}
+          </h2>
+          <div class="productos-grid">
+            @for (prod of grupo.items; track prod.idProducto) {
+              <div class="producto-card" [class.en-carrito]="productoCesta(prod)">
+                <div class="producto-body">
+                  <h4 class="producto-nombre">{{ prod.nombreProducto }}</h4>
+                  @if (prod.descripcionProducto) {
+                    <p class="producto-desc">{{ prod.descripcionProducto }}</p>
+                  }
+                  <span class="producto-precio">S/ {{ prod.precioProducto.toFixed(2) }}</span>
+                </div>
+                <button class="btn-add" (click)="agregarAlCarrito(prod)">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            }
+          </div>
+        </section>
+      }
+    </main>
+  </div>
+</div>

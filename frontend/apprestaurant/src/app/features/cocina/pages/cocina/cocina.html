@@ -1,0 +1,54 @@
+<h2>Cocina</h2>
+<div class="tabs">
+  <button [class.active]="activeTab === 'pendientes'" (click)="setTab('pendientes')">Pendientes ({{ pendientes.length }})</button>
+  <button [class.active]="activeTab === 'preparacion'" (click)="setTab('preparacion')">En Preparación ({{ preparacion.length }})</button>
+  <button [class.active]="activeTab === 'listos'" (click)="setTab('listos')">Listos ({{ listos.length }})</button>
+</div>
+@if (activeTab === 'pendientes') {
+  <div class="order-grid">
+    @for (pedido of pendientes; track pedido.idPedido) {
+      <div class="order-card">
+        <div class="order-header"><strong>Mesa: {{ pedido.mesa }}</strong><span class="time">{{ pedido.fechaHoraPedido }}</span></div>
+        <ul>
+          @for (prod of pedido.productos; track prod.idDetalle) {
+            <li>{{ prod.cantidad }}x {{ prod.nombreProducto }}</li>
+          }
+        </ul>
+        <p class="obs">{{ pedido.observacion }}</p>
+        <button class="btn-primary" (click)="cambiarEstado(pedido.idPedido, 'EN_PREPARACION')">Iniciar Preparación</button>
+      </div>
+    }
+  </div>
+}
+@if (activeTab === 'preparacion') {
+  <div class="order-grid">
+    @for (pedido of preparacion; track pedido.idPedido) {
+      <div class="order-card preparacion">
+        <div class="order-header"><strong>Mesa: {{ pedido.mesa }}</strong><span class="time">{{ pedido.fechaHoraPedido }}</span></div>
+        <ul>
+          @for (prod of pedido.productos; track prod.idDetalle) {
+            <li>{{ prod.cantidad }}x {{ prod.nombreProducto }}</li>
+          }
+        </ul>
+        <p class="obs">{{ pedido.observacion }}</p>
+        <button class="btn-success" (click)="cambiarEstado(pedido.idPedido, 'LISTO')">Marcar Listo</button>
+      </div>
+    }
+  </div>
+}
+@if (activeTab === 'listos') {
+  <div class="order-grid">
+    @for (pedido of listos; track pedido.idPedido) {
+      <div class="order-card listo">
+        <div class="order-header"><strong>Mesa: {{ pedido.mesa }}</strong><span class="time">{{ pedido.fechaHoraPedido }}</span></div>
+        <ul>
+          @for (prod of pedido.productos; track prod.idDetalle) {
+            <li>{{ prod.cantidad }}x {{ prod.nombreProducto }}</li>
+          }
+        </ul>
+        <p class="obs">{{ pedido.observacion }}</p>
+        <button class="btn-primary" (click)="cambiarEstado(pedido.idPedido, 'ENTREGADO')">Entregar</button>
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,28 @@
+<h2>Reservas</h2>
+<button class="btn-primary" (click)="editing = true; form = {idUsuario:0,idLugar:0,fechaHoraReserva:'',cantidadPersonas:1,observacionReserva:''}">+ Nueva</button>
+@if (editing) {
+  <div class="form-card">
+    <div class="form-group"><label>ID Usuario</label><input [(ngModel)]="form.idUsuario" type="number" /></div>
+    <div class="form-group"><label>ID Lugar</label><input [(ngModel)]="form.idLugar" type="number" /></div>
+    <div class="form-group"><label>Fecha y Hora</label><input [(ngModel)]="form.fechaHoraReserva" type="datetime-local" /></div>
+    <div class="form-group"><label>Personas</label><input [(ngModel)]="form.cantidadPersonas" type="number" /></div>
+    <div class="form-group"><label>Observación</label><input [(ngModel)]="form.observacionReserva" /></div>
+    <button class="btn-primary" (click)="save()">Guardar</button>
+    <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+  </div>
+}
+<table>
+  <thead><tr><th>Usuario</th><th>Lugar</th><th>Fecha</th><th>Personas</th><th>Estado</th><th>Adelanto</th><th>Acciones</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idReserva) {
+      <tr><td>{{ item.nombreUsuario }}</td><td>{{ item.nombreLugar }}</td><td>{{ item.fechaHoraReserva }}</td><td>{{ item.cantidadPersonas }}</td>
+        <td>{{ item.estadoReserva }}</td><td>S/ {{ item.adelantoReserva }}</td>
+        <td>
+          @if (item.estadoReserva === 'PENDIENTE') { <button (click)="confirmar(item.idReserva)">Confirmar</button> }
+          @if (item.estadoReserva !== 'CANCELADA') { <button (click)="cancelarReserva(item.idReserva)">Cancelar</button> }
+          <button (click)="delete(item.idReserva)">🗑️</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

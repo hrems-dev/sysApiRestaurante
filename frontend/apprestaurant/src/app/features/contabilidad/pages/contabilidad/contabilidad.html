@@ -1,0 +1,36 @@
+<h2>Contabilidad</h2>
+<div class="reports-grid">
+  <div class="report-card">
+    <h3>Ventas Diarias</h3>
+    <div class="form-group">
+      <label>Fecha</label>
+      <input [(ngModel)]="fechaDiaria" type="date" />
+    </div>
+    <button class="btn-primary" (click)="consultarVentasDiarias()">Consultar</button>
+    @if (ventaDiaria) {
+      <div class="data">
+        <p><strong>Total Ventas:</strong> S/ {{ ventaDiaria.totalVentas }}</p>
+        <p><strong>Cantidad:</strong> {{ ventaDiaria.cantidadVentas }}</p>
+        <p><strong>Efectivo:</strong> S/ {{ ventaDiaria.totalEfectivo }}</p>
+        <p><strong>Tarjeta:</strong> S/ {{ ventaDiaria.totalTarjeta }}</p>
+        <p><strong>Yape:</strong> S/ {{ ventaDiaria.totalYape }}</p>
+      </div>
+    }
+  </div>
+  <div class="report-card">
+    <h3>Resumen Contable</h3>
+    <div class="form-group"><label>Fecha Inicio</label><input [(ngModel)]="fechaInicio" type="date" /></div>
+    <div class="form-group"><label>Fecha Fin</label><input [(ngModel)]="fechaFin" type="date" /></div>
+    <button class="btn-primary" (click)="consultarResumen()">Consultar</button>
+    @if (resumen) {
+      <div class="data">
+        <p><strong>Ingresos:</strong> S/ {{ resumen.ingresos }}</p>
+        <p><strong>Egresos:</strong> S/ {{ resumen.egresos }}</p>
+        <p><strong>Saldo:</strong> S/ {{ resumen.saldo }}</p>
+        <p><strong>Ventas:</strong> {{ resumen.cantidadVentas }}</p>
+        <p><strong>Pedidos:</strong> {{ resumen.cantidadPedidos }}</p>
+        <p><strong>Reservas:</strong> {{ resumen.cantidadReservas }}</p>
+      </div>
+    }
+  </div>
+</div>
