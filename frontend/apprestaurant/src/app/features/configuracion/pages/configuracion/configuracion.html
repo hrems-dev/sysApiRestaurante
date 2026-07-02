@@ -1,0 +1,21 @@
+<h2>Configuración del Sistema</h2>
+<button class="btn-primary" (click)="editing = true; editId = null; form = {clave:'',valor:'',descripcion:''}">+ Nueva</button>
+@if (editing) {
+  <div class="form-card">
+    <div class="form-group"><label>Clave</label><input [(ngModel)]="form.clave" /></div>
+    <div class="form-group"><label>Valor</label><input [(ngModel)]="form.valor" /></div>
+    <div class="form-group"><label>Descripción</label><input [(ngModel)]="form.descripcion" /></div>
+    <button class="btn-primary" (click)="save()">Guardar</button>
+    <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+  </div>
+}
+<table>
+  <thead><tr><th>Clave</th><th>Valor</th><th>Descripción</th><th>Acciones</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idConfig) {
+      <tr><td>{{ item.clave }}</td><td>{{ item.valor }}</td><td>{{ item.descripcion }}</td>
+        <td><button (click)="edit(item)">✏️</button><button (click)="delete(item.idConfig)">🗑️</button></td>
+      </tr>
+    }
+  </tbody>
+</table>

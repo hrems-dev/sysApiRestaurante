@@ -1,0 +1,64 @@
+<div class="layout" [class.sidebar-closed]="!sidebarOpen()">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand">
+        <i class="fa-solid fa-utensils"></i>
+        @if (sidebarOpen()) { <span>Restaurante</span> }
+      </div>
+      <button class="toggle-btn" (click)="toggleSidebar()">
+        <i class="fa-solid" [class.fa-chevron-left]="sidebarOpen()" [class.fa-chevron-right]="!sidebarOpen()"></i>
+      </button>
+    </div>
+
+    <div class="sidebar-nav">
+      @for (group of sections; track group.title) {
+        <div class="nav-section">
+          @if (sidebarOpen()) {
+            <span class="nav-section-title">{{ group.title }}</span>
+          }
+          @for (item of group.items; track item.path) {
+            @if (isLocked(item)) {
+              <a class="nav-item locked" [title]="lockedTooltip">
+                <i [class]="item.icon" class="nav-icon"></i>
+                @if (sidebarOpen()) {
+                  <span class="nav-label">{{ item.label }}</span>
+                }
+                <i class="fa-solid fa-lock lock-icon"></i>
+              </a>
+            } @else {
+              <a class="nav-item" [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">
+                <i [class]="item.icon" class="nav-icon"></i>
+                @if (sidebarOpen()) {
+                  <span class="nav-label">{{ item.label }}</span>
+                }
+              </a>
+            }
+          }
+        </div>
+      }
+    </div>
+  </aside>
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-left">
+        <i class="fa-solid fa-bars hamburger" (click)="toggleSidebar()"></i>
+        <span class="page-title">Sistema de Gestión Restaurante</span>
+      </div>
+      <div class="user-info">
+        <div class="user-avatar">
+          {{ username()?.charAt(0)?.toUpperCase() }}
+        </div>
+        <div class="user-details">
+          <span class="user-name">{{ username() }}</span>
+          <span class="user-role">{{ role() }}</span>
+        </div>
+        <button class="btn-logout" (click)="logout()" title="Cerrar sesión">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </header>
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

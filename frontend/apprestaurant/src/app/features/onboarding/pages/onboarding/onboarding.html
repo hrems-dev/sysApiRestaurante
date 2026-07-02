@@ -1,0 +1,96 @@
+<div class="page-header">
+  <h2><i class="fa-solid fa-rocket"></i> Configuración Inicial</h2>
+  <p>Registra los datos de tu restaurante y carga datos básicos desde Excel</p>
+</div>
+
+<div class="onboarding-layout">
+  <div class="onboarding-main">
+    <div class="onboarding-card">
+      <div class="card-header">
+        <i class="fa-solid fa-store"></i>
+        <h3>Datos del Restaurante</h3>
+      </div>
+
+      @if (yaConfigurado) {
+        <div class="alert alert-info">
+          <i class="fa-solid fa-circle-check"></i>
+          El restaurante ya está configurado. Puedes revisar o modificar los datos.
+        </div>
+      }
+
+      <div class="form-row">
+        <div class="input-group full">
+          <label><i class="fa-solid fa-tag"></i> Nombre del Restaurante*</label>
+          <input [(ngModel)]="restaurante.nombreRestaurante" placeholder="Ej: Restaurante El Gourmet" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-receipt"></i> RUC</label>
+          <input [(ngModel)]="restaurante.ruc" placeholder="12345678901" />
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-phone"></i> Teléfono</label>
+          <input [(ngModel)]="restaurante.telefono" placeholder="+51 999 888 777" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-envelope"></i> Email</label>
+          <input [(ngModel)]="restaurante.email" type="email" placeholder="contacto@restaurante.com" />
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-map-pin"></i> Dirección</label>
+          <input [(ngModel)]="restaurante.direccion" placeholder="Av. Principal 123" />
+        </div>
+      </div>
+
+      @if (error) {
+        <div class="alert alert-error">
+          <i class="fa-solid fa-circle-exclamation"></i> {{ error }}
+        </div>
+      }
+
+      @if (mensaje) {
+        <div class="alert alert-success">
+          <i class="fa-solid fa-circle-check"></i> {{ mensaje }}
+        </div>
+      }
+
+      <div class="form-actions">
+        <button class="btn btn-primary" (click)="guardar()" [disabled]="loading">
+          @if (loading) {
+            <i class="fa-solid fa-spinner fa-spin"></i> Guardando...
+          } @else {
+            <i class="fa-solid fa-floppy-disk"></i> {{ yaConfigurado ? 'Actualizar' : 'Guardar' }}
+          }
+        </button>
+        @if (yaConfigurado) {
+          <button class="btn btn-secondary" (click)="irDashboard()">
+            <i class="fa-solid fa-arrow-right"></i> Ir al Dashboard
+          </button>
+        }
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="onboarding-info">
+    <div class="info-card">
+      <i class="fa-solid fa-circle-check"></i>
+      <h4>Paso 1</h4>
+      <p>Registra los datos de tu restaurante</p>
+    </div>
+    <div class="info-card">
+      <i class="fa-solid fa-file-excel"></i>
+      <h4>Paso 2</h4>
+      <p>Importa datos desde Excel en el Dashboard</p>
+    </div>
+    <div class="info-card">
+      <i class="fa-solid fa-rocket"></i>
+      <h4>¡Listo!</h4>
+      <p>Explora los módulos desde el menú lateral</p>
+    </div>
+  </div>
+</div>

@@ -46,6 +46,10 @@ export class AuthService {
     return localStorage.getItem('rol');
   }
 
+  getUsername(): string | null {
+    return localStorage.getItem('username');
+  }
+
   private saveSession(res: AuthResponse): void {
     localStorage.setItem('token', res.token);
     localStorage.setItem('username', res.username);

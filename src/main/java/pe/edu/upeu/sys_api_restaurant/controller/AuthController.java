@@ -59,6 +59,11 @@ public class AuthController {
                 .orElseThrow(() -> new BadRequestException(
                         "Rol no encontrado: " + request.rolNombre()));
 
+        String codigoEmpleado = null;
+        if ("MESERO".equalsIgnoreCase(request.rolNombre())) {
+            codigoEmpleado = generarCodigoEmpleado();
+        }
+
         Usuario usuario = Usuario.builder()
                 .nombreUsuario(request.username())
                 .nombres(request.nombres())
@@ -66,6 +71,7 @@ public class AuthController {
                 .email(request.email())
                 .passwordHash(passwordEncoder.encode(request.password()))
                 .telefono(request.telefono())
+                .codigoEmpleado(codigoEmpleado)
                 .estadoUsuario(true)
                 .rol(rol)
                 .build();
@@ -78,5 +84,14 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new AuthResponse(token, usuario.getUsername(),
                         usuario.getRol().getNombreRol(), "Usuario registrado exitosamente"));
+    }
+
+    private String generarCodigoEmpleado() {
+        String ultimoCodigo = usuarioRepository.findMaxCodigoEmpleado();
+        int numero = 1;
+        if (ultimoCodigo != null && ultimoCodigo.startsWith("MES-")) {
+            numero = Integer.parseInt(ultimoCodigo.substring(4)) + 1;
+        }
+        return String.format("MES-%03d", numero);
     }
 }

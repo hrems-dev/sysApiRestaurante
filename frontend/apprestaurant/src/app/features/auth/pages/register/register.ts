@@ -1,23 +1,28 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth';
 import { RegisterRequest } from '../../../../core/models/register-request';
+import { RolService } from '../../../../core/services/usuario.service';
+import { RoleModels } from '../../../../core/models/role.models';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './register.html',
+  styleUrl: './register.scss',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private rolService = inject(RolService);
 
   loading = false;
   errorMsg = '';
+  roles: RoleModels[] = [];
 
   registerForm = this.fb.nonNullable.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
@@ -28,6 +33,10 @@ export class RegisterComponent {
     telefono: [''],
     rolNombre: ['', [Validators.required]],
   });
+
+  ngOnInit() {
+    this.rolService.findAll().subscribe(data => this.roles = data);
+  }
 
   onSubmit(): void {
     if (this.registerForm.invalid) {
@@ -51,11 +60,11 @@ export class RegisterComponent {
     this.authService.register(data).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/sistema/onboarding']);
       },
       error: (err) => {
         this.loading = false;
-        this.errorMsg = err?.error?.message || 'Error al registrarse';
+        this.errorMsg = err?.error?.mensaje || 'Error al registrarse';
       },
     });
   }

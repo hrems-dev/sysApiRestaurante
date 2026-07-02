@@ -1,0 +1,20 @@
+<h2>Facturación / Comprobantes</h2>
+<button class="btn-primary" (click)="editing = true; form = {idVenta:0,tipoDocumento:''}">+ Emitir Comprobante</button>
+@if (editing) {
+  <div class="form-card">
+    <div class="form-group"><label>ID Venta</label><input [(ngModel)]="form.idVenta" type="number" /></div>
+    <div class="form-group"><label>Tipo Documento</label><input [(ngModel)]="form.tipoDocumento" /></div>
+    <button class="btn-primary" (click)="emitir()">Emitir</button>
+    <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+  </div>
+}
+<table>
+  <thead><tr><th>#</th><th>Tipo</th><th>Serie</th><th>Número</th><th>Total</th><th>Emisión</th><th>Estado</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idDocVenta) {
+      <tr><td>{{ item.idDocVenta }}</td><td>{{ item.tipoDocumento }}</td><td>{{ item.serie }}</td><td>{{ item.numero }}</td>
+        <td>S/ {{ item.totalVenta }}</td><td>{{ item.fechaEmision }}</td><td>{{ item.estadoDocumento }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

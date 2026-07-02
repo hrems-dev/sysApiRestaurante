@@ -1,0 +1,34 @@
+<h2>Pagos</h2>
+<button class="btn-primary" (click)="editing = true; form = {idMetodoPago:0,codigoPago:'',montoPago:0,referenciaPago:''}">+ Nuevo Pago</button>
+@if (editing) {
+  <div class="form-card">
+    <div class="form-group"><label>Método de Pago</label>
+      <select [(ngModel)]="form.idMetodoPago">
+        <option [value]="0">Seleccione</option>
+        @for (m of metodosPago; track m.idMetodoPago) {
+          <option [value]="m.idMetodoPago">{{ m.nombreMetodo }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group"><label>Código</label><input [(ngModel)]="form.codigoPago" /></div>
+    <div class="form-group"><label>Monto</label><input [(ngModel)]="form.montoPago" type="number" step="0.01" /></div>
+    <div class="form-group"><label>Referencia</label><input [(ngModel)]="form.referenciaPago" /></div>
+    <button class="btn-primary" (click)="save()">Guardar</button>
+    <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+  </div>
+}
+<table>
+  <thead><tr><th>Código</th><th>Método</th><th>Monto</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idPago) {
+      <tr><td>{{ item.codigoPago }}</td><td>{{ item.nombreMetodo }}</td><td>S/ {{ item.montoPago }}</td><td>{{ item.estadoPago }}</td><td>{{ item.fechaPago }}</td>
+        <td>
+          @if (item.estadoPago !== 'COMPLETADO') {
+            <button (click)="validarPago(item.idPago, item.codigoPago)">Validar</button>
+          }
+          <button (click)="delete(item.idPago)">🗑️</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

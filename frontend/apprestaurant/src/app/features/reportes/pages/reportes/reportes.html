@@ -1,0 +1,55 @@
+<h2>Reportes</h2>
+<div class="filters">
+  <div class="form-group"><label>Fecha Inicio</label><input [(ngModel)]="fechaInicio" type="date" /></div>
+  <div class="form-group"><label>Fecha Fin</label><input [(ngModel)]="fechaFin" type="date" /></div>
+</div>
+<div class="reports-grid">
+  <div class="report-card">
+    <h3>Ventas</h3>
+    <button class="btn-primary" (click)="consultarVentas()">Consultar</button>
+    @if (reporteVentas) {
+      <div class="data">
+        <p><strong>Total:</strong> S/ {{ reporteVentas.totalVentas }}</p>
+        <p><strong>Cantidad:</strong> {{ reporteVentas.cantidadVentas }}</p>
+        @for (entry of reporteVentas.ventasPorDia | keyvalue; track entry.key) {
+          <p>{{ entry.key }}: S/ {{ entry.value }}</p>
+        }
+      </div>
+    }
+  </div>
+  <div class="report-card">
+    <h3>Pedidos</h3>
+    <button class="btn-primary" (click)="consultarPedidos()">Consultar</button>
+    @if (reportePedidos) {
+      <div class="data">
+        <p><strong>Total:</strong> {{ reportePedidos.totalPedidos }}</p>
+        @for (entry of reportePedidos.pedidosPorEstado | keyvalue; track entry.key) {
+          <p>{{ entry.key }}: {{ entry.value }}</p>
+        }
+      </div>
+    }
+  </div>
+  <div class="report-card">
+    <h3>Reservas</h3>
+    <button class="btn-primary" (click)="consultarReservas()">Consultar</button>
+    @if (reporteReservas) {
+      <div class="data">
+        <p><strong>Total:</strong> {{ reporteReservas.totalReservas }}</p>
+        @for (entry of reporteReservas.reservasPorEstado | keyvalue; track entry.key) {
+          <p>{{ entry.key }}: {{ entry.value }}</p>
+        }
+      </div>
+    }
+  </div>
+  <div class="report-card">
+    <h3>Entregas por Repartidor</h3>
+    <button class="btn-primary" (click)="consultarEntregas()">Consultar</button>
+    @if (reporteEntregas.length) {
+      <div class="data">
+        @for (item of reporteEntregas; track item.nombreRepartidor) {
+          <p><strong>{{ item.nombreRepartidor }}</strong> — {{ item.cantidadEntregas }} entregas, {{ item.tiempoPromedioMinutos }} min promedio</p>
+        }
+      </div>
+    }
+  </div>
+</div>

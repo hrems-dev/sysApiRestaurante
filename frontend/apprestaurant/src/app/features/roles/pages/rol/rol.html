@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h2>Roles</h2>
+  <button class="btn btn-primary" (click)="openNuevo()">
+    <i class="fa-solid fa-plus"></i> Nuevo Rol
+  </button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of items; track item.idRol) {
+      <tr>
+        <td>{{ item.nombreRol }}</td>
+        <td>{{ item.descripcionRol }}</td>
+        <td>
+          <span class="badge" [class.active]="item.estadoRol" [class.inactive]="!item.estadoRol">
+            {{ item.estadoRol ? 'Activo' : 'Inactivo' }}
+          </span>
+        </td>
+        <td class="actions-cell">
+          <button class="btn-icon" (click)="editar(item)" title="Editar"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="btn-icon btn-icon-danger" (click)="eliminar(item.idRol)" title="Eliminar"><i class="fa-solid fa-trash-can"></i></button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<app-modal [open]="showModal" (close)="showModal = false" title="{{ editId ? 'Editar Rol' : 'Nuevo Rol' }}">
+  <div class="modal-form">
+    <div class="form-group">
+      <label>Nombre Rol</label>
+      <input [(ngModel)]="form.nombreRol" placeholder="Ej: CAJA" />
+    </div>
+    <div class="form-group">
+      <label>Descripción</label>
+      <input [(ngModel)]="form.descripcionRol" placeholder="Descripción del rol" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" (click)="save()">Guardar</button>
+      <button class="btn btn-secondary" (click)="showModal = false">Cancelar</button>
+    </div>
+  </div>
+</app-modal>

@@ -1,0 +1,111 @@
+﻿.\gradlew.bat : Picked up JAVA_TOOL_OPTIONS: -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8
+En línea: 1 Carácter: 79
++ ... ct-AbogadoSYS\sys_api_restaurant'; .\gradlew.bat bootRun 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Picked up JAVA_....encoding=UTF-8:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+> Task :compileJava UP-TO-DATE
+> Task :processResources
+> Task :classes
+> Task :resolveMainClassName
+
+> Task :bootRun
+Picked up JAVA_TOOL_OPTIONS: -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-07-01T18:18:33.125-05:00  INFO 17908 --- [sys_api_restaurant] [           main] p.e.u.s.SysApiRestaurantApplication      : Starting SysApiRestaurantApplication using Java 21.0.11 with PID 17908 (E:\CArpHermes\CursoAnalisisDise├▒o\project-AbogadoSYS\sys_api_restaurant\build\classes\java\main started by lol in E:\CArpHermes\CursoAnalisisDise├▒o\project-AbogadoSYS\sys_api_restaurant)
+2026-07-01T18:18:33.128-05:00  INFO 17908 --- [sys_api_restaurant] [           main] p.e.u.s.SysApiRestaurantApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-07-01T18:18:33.788-05:00  INFO 17908 --- [sys_api_restaurant] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-01T18:18:33.894-05:00  INFO 17908 --- [sys_api_restaurant] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 97 ms. Found 17 JPA repository interfaces.
+2026-07-01T18:18:34.394-05:00  INFO 17908 --- [sys_api_restaurant] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-01T18:18:34.408-05:00  INFO 17908 --- [sys_api_restaurant] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-01T18:18:34.409-05:00  INFO 17908 --- [sys_api_restaurant] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-01T18:18:34.462-05:00  INFO 17908 --- [sys_api_restaurant] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1290 ms
+2026-07-01T18:18:34.619-05:00  INFO 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-01T18:18:34.687-05:00  INFO 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-01T18:18:35.112-05:00  INFO 17908 --- [sys_api_restaurant] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-01T18:18:35.142-05:00  INFO 17908 --- [sys_api_restaurant] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-01T18:18:35.315-05:00  INFO 17908 --- [sys_api_restaurant] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3c97f5e9
+2026-07-01T18:18:35.317-05:00  INFO 17908 --- [sys_api_restaurant] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-01T18:18:35.360-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-01T18:18:35.385-05:00  INFO 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/restaurante_db]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.14
+	Default catalog/schema: restaurante_db/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-01T18:18:36.639-05:00  INFO 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-01T18:18:36.831-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-01T18:18:36.831-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : constraint "uk6nvv7010u01wxqnp687qik6pk" of relation "categoria_producto" does not exist, skipping
+2026-07-01T18:18:36.839-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-01T18:18:36.839-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : constraint "ukqp93r367kr62916jo5j26668m" of relation "configuracion" does not exist, skipping
+2026-07-01T18:18:36.846-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-01T18:18:36.846-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : constraint "uk4jba9im5rjy1d5q628nyys9qe" of relation "doc_venta" does not exist, skipping
+2026-07-01T18:18:36.854-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-01T18:18:36.854-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : constraint "ukbfsoq0858xn2iw2l102kal7ss" of relation "metodo_pago" does not exist, skipping
+2026-07-01T18:18:36.861-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-01T18:18:36.861-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : constraint "ukdn0n76ac92mplucl1i1kxbx5x" of relation "pago" does not exist, skipping
+2026-07-01T18:18:36.867-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-01T18:18:36.867-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : constraint "ukav0xp36qm2maiiaxiilq8uuch" of relation "qrlugar" does not exist, skipping
+2026-07-01T18:18:36.874-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-01T18:18:36.875-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : constraint "ukdo0m21fnl5yubgihvdsfu0loq" of relation "restaurante" does not exist, skipping
+2026-07-01T18:18:36.882-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-07-01T18:18:36.882-05:00  WARN 17908 --- [sys_api_restaurant] [           main] org.hibernate.orm.jdbc.warn              : constraint "ukomr7miniw0q94nh5dvy0mlsbl" of relation "venta" does not exist, skipping
+2026-07-01T18:18:36.939-05:00  INFO 17908 --- [sys_api_restaurant] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-01T18:18:36.991-05:00  INFO 17908 --- [sys_api_restaurant] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-01T18:18:37.236-05:00  INFO 17908 --- [sys_api_restaurant] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2026-07-01T18:18:37.530-05:00  WARN 17908 --- [sys_api_restaurant] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-01T18:18:38.020-05:00  INFO 17908 --- [sys_api_restaurant] [           main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-07-01T18:18:38.062-05:00  INFO 17908 --- [sys_api_restaurant] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-07-01T18:18:38.067-05:00  INFO 17908 --- [sys_api_restaurant] [           main] p.e.u.s.SysApiRestaurantApplication      : Started SysApiRestaurantApplication in 5.355 seconds (process running for 5.745)
+MetodoPago EFECTIVO creado correctamente
+MetodoPago TARJETA_CREDITO creado correctamente
+MetodoPago TARJETA_DEBITO creado correctamente
+MetodoPago YAPE creado correctamente
+MetodoPago PLIN creado correctamente
+MetodoPago TRANSFERENCIA creado correctamente
+Configuracion MONEDA creada correctamente
+Configuracion IGV creada correctamente
+Configuracion HORA_APERTURA creada correctamente
+Configuracion HORA_CIERRE creada correctamente
+Configuracion NOMBRE_RESTAURANTE creada correctamente
+2026-07-01T18:28:09.576-05:00  INFO 17908 --- [sys_api_restaurant] [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-01T18:28:09.576-05:00  INFO 17908 --- [sys_api_restaurant] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-01T18:28:09.577-05:00  INFO 17908 --- [sys_api_restaurant] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-01T18:28:37.080-05:00  WARN 17908 --- [sys_api_restaurant] [nio-8080-exec-1] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 23505
+2026-07-01T18:28:37.081-05:00  WARN 17908 --- [sys_api_restaurant] [nio-8080-exec-1] org.hibernate.orm.jdbc.error             : ERROR: duplicate key value violates unique constraint "ukpuhr3k3l7bj71hb7hk7ktpxn0"
+  Detail: Key (nombre_usuario)=(admin) already exists.
+
+> Task :bootRun FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':bootRun' (registered by plugin 'org.springframework.boot').
+> Process 'command 
+'C:\Users\lol\AppData\Roaming\Code\User\globalStorage\pleiades.java-extension-pack-jdk\java\21\bin\java.exe'' finished 
+with non-zero exit value -1 (NTSTATUS 0xFFFFFFFF)
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 24m 20s
+4 actionable tasks: 3 executed, 1 up-to-date

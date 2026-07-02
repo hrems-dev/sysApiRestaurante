@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Optional<Usuario> findByNombreUsuario(String nombreUsuario);
     Optional<Usuario> findByEmail(String email);
+
+    @org.springframework.data.jpa.repository.Query("SELECT MAX(u.codigoEmpleado) FROM Usuario u WHERE u.codigoEmpleado LIKE 'MES-%'")
+    String findMaxCodigoEmpleado();
 }

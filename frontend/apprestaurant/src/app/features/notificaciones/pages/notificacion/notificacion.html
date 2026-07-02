@@ -1,0 +1,26 @@
+<h2>Notificaciones</h2>
+<div class="form-card">
+  <div class="form-group"><label>ID Usuario</label><input [(ngModel)]="userId" type="number" /></div>
+  <button class="btn-primary" (click)="consultar()">Consultar</button>
+</div>
+<button class="btn-primary" (click)="editing = true; form = {idUsuario: userId, tipoNotificacion: '', titulo: '', descripcion: ''}">+ Nueva</button>
+@if (editing) {
+  <div class="form-card">
+    <div class="form-group"><label>Tipo</label><input [(ngModel)]="form.tipoNotificacion" /></div>
+    <div class="form-group"><label>Título</label><input [(ngModel)]="form.titulo" /></div>
+    <div class="form-group"><label>Descripción</label><input [(ngModel)]="form.descripcion" /></div>
+    <button class="btn-primary" (click)="save()">Guardar</button>
+    <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+  </div>
+}
+<table>
+  <thead><tr><th>Título</th><th>Tipo</th><th>Leído</th><th>Fecha</th><th>Acciones</th></tr></thead>
+  <tbody>
+    @for (item of items; track item.idNotificacion) {
+      <tr><td>{{ item.titulo }}</td><td>{{ item.tipoNotificacion }}</td><td>{{ item.leido ? 'Sí' : 'No' }}</td>
+        <td>{{ item.fechaNotificacion }}</td>
+        <td><button (click)="marcarLeida(item.idNotificacion)" [disabled]="item.leido">📖</button><button (click)="delete(item.idNotificacion)">🗑️</button></td>
+      </tr>
+    }
+  </tbody>
+</table>

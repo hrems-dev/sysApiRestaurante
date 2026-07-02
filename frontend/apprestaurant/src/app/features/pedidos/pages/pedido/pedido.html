@@ -1,0 +1,75 @@
+<div class="page-header">
+  <h2><i class="fa-solid fa-clipboard-list"></i> Pedidos</h2>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Usuario</th>
+      <th>Tipo</th>
+      <th>Estado</th>
+      <th>Total</th>
+      <th>Pagado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of items; track item.idPedido) {
+      <tr (click)="toggleExpand(item.idPedido)" class="clickable">
+        <td>{{ item.idPedido }}</td>
+        <td>{{ item.nombreUsuario }}</td>
+        <td>{{ item.tipoPedido }}</td>
+        <td>
+          <span class="badge" [class.activo]="item.estadoPedido === 'pendiente' || item.estadoPedido === 'aceptado'"
+                [class.preparacion]="item.estadoPedido === 'en_preparacion'"
+                [class.camino]="item.estadoPedido === 'en_camino'"
+                [class.entregado]="item.estadoPedido === 'entregado'"
+                [class.cancelado]="item.estadoPedido === 'cancelado'">
+            {{ item.estadoPedido }}
+          </span>
+        </td>
+        <td>S/ {{ item.totalPedido }}</td>
+        <td>{{ item.pagado ? 'Sí' : 'No' }}</td>
+        <td class="actions-cell">
+          @if (item.estadoPedido === 'pendiente') {
+            <button class="btn-icon" (click)="cambiarEstado(item.idPedido, 'aceptado'); $event.stopPropagation()" title="Aceptar"><i class="fa-solid fa-check"></i></button>
+          }
+          @if (item.estadoPedido === 'aceptado') {
+            <button class="btn-icon" (click)="cambiarEstado(item.idPedido, 'en_preparacion'); $event.stopPropagation()" title="Preparar"><i class="fa-solid fa-fire"></i></button>
+          }
+          @if (item.estadoPedido === 'en_preparacion') {
+            <button class="btn-icon" (click)="cambiarEstado(item.idPedido, 'en_camino'); $event.stopPropagation()" title="Enviar"><i class="fa-solid fa-truck"></i></button>
+          }
+          @if (item.estadoPedido === 'en_camino') {
+            <button class="btn-icon" (click)="cambiarEstado(item.idPedido, 'entregado'); $event.stopPropagation()" title="Entregar"><i class="fa-solid fa-check-double"></i></button>
+          }
+          @if (item.estadoPedido !== 'entregado' && item.estadoPedido !== 'cancelado') {
+            <button class="btn-icon btn-icon-danger" (click)="cambiarEstado(item.idPedido, 'cancelado'); $event.stopPropagation()" title="Cancelar"><i class="fa-solid fa-ban"></i></button>
+          }
+          @if (!item.pagado) {
+            <button class="btn-icon" (click)="marcarPagado(item.idPedido); $event.stopPropagation()" title="Pagar"><i class="fa-solid fa-dollar-sign"></i></button>
+          }
+          <button class="btn-icon btn-icon-danger" (click)="delete(item.idPedido); $event.stopPropagation()" title="Anular"><i class="fa-solid fa-trash-can"></i></button>
+        </td>
+      </tr>
+      @if (expandedId === item.idPedido) {
+        <tr class="detail-row">
+          <td colspan="7">
+            <div class="detalles">
+              <strong>Detalles:</strong>
+              <ul>
+                @for (d of item.detalles; track d.idDetalle) {
+                  <li>{{ d.cantidad }}x {{ d.nombreProducto }} - S/ {{ d.subtotal }}</li>
+                }
+              </ul>
+              <p><strong>Observación:</strong> {{ item.observacionPedido || '—' }}</p>
+              <p><strong>Dirección:</strong> {{ item.direccionEntrega || '—' }}</p>
+              <p><strong>Fecha:</strong> {{ item.fechaHoraPedido }}</p>
+            </div>
+          </td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>

@@ -10,6 +10,7 @@ import { LoginRequest } from '../../../../core/models/login-request';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.html',
+  styleUrl: './login.scss',
 })
 export class LoginComponent {
   private fb = inject(FormBuilder);
@@ -41,11 +42,11 @@ export class LoginComponent {
     this.authService.login(data).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/sistema/onboarding']);
       },
       error: (err) => {
         this.loading = false;
-        this.errorMsg = err?.error?.message || 'Error al iniciar sesión';
+        this.errorMsg = err?.error?.mensaje || 'Error al iniciar sesión';
       },
     });
   }
