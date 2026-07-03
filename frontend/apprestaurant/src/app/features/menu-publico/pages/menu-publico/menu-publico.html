@@ -10,6 +10,40 @@
   </header>
 
   <div class="menu-body">
+    <main class="menu-main">
+      @if (noDisponible) {
+        <div class="no-disponible">
+          <i class="fa-solid fa-circle-info"></i>
+          <h3>Menú no disponible</h3>
+          <p>El menú del día aún no está disponible. Vuelve más tarde.</p>
+        </div>
+      }
+      @for (grupo of productosPorCategoria; track grupo.categoria) {
+        <section class="categoria-section">
+          <h2 class="categoria-titulo">
+            <i class="fa-solid fa-folder-open"></i>
+            {{ grupo.categoria }}
+          </h2>
+          <div class="productos-grid">
+            @for (prod of grupo.items; track prod.idProducto) {
+              <div class="producto-card" [class.en-carrito]="productoCesta(prod)">
+                <div class="producto-body">
+                  <h4 class="producto-nombre">{{ prod.nombreProducto }}</h4>
+                  @if (prod.descripcionProducto) {
+                    <p class="producto-desc">{{ prod.descripcionProducto }}</p>
+                  }
+                  <span class="producto-precio">S/ {{ prod.precioProducto.toFixed(2) }}</span>
+                </div>
+                <button class="btn-add" (click)="agregarAlCarrito(prod)">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            }
+          </div>
+        </section>
+      }
+    </main>
+
     <aside class="menu-sidebar">
       <div class="sidebar-card mesa-card">
         <h3><i class="fa-solid fa-chair"></i> Identifica tu Mesa</h3>
@@ -20,12 +54,9 @@
               <i class="fa-solid fa-camera"></i> Escanear QR
             </button>
             <div class="divider">o</div>
-            <div class="input-group">
-              <input [(ngModel)]="mesaManual" placeholder="N° de mesa" />
-              <button class="btn btn-sm" (click)="identificarMesa()">
-                <i class="fa-solid fa-arrow-right"></i>
-              </button>
-            </div>
+            <button class="btn btn-outline" (click)="abrirModalLugares()">
+              <i class="fa-solid fa-list"></i> Agregar de forma manual
+            </button>
           </div>
         </div>
 
@@ -34,7 +65,7 @@
         <div class="mesa-identificada" *ngIf="mesaIdentificada">
           <i class="fa-solid fa-circle-check"></i>
           <span>Mesa <strong>{{ mesaIdentificada }}</strong></span>
-          <button class="btn btn-link" (click)="mesaIdentificada = ''; carrito = []; pedidoEnviado = false">
+          <button class="btn btn-link" (click)="cambiarMesa()">
             Cambiar
           </button>
         </div>
@@ -78,39 +109,41 @@
         </div>
       }
     </aside>
+  </div>
 
-    <main class="menu-main">
-      @if (noDisponible) {
-        <div class="no-disponible">
-          <i class="fa-solid fa-circle-info"></i>
-          <h3>Menú no disponible</h3>
-          <p>El menú del día aún no está disponible. Vuelve más tarde.</p>
-        </div>
-      }
-      @for (grupo of productosPorCategoria; track grupo.categoria) {
-        <section class="categoria-section">
-          <h2 class="categoria-titulo">
-            <i class="fa-solid fa-folder-open"></i>
-            {{ grupo.categoria }}
-          </h2>
-          <div class="productos-grid">
-            @for (prod of grupo.items; track prod.idProducto) {
-              <div class="producto-card" [class.en-carrito]="productoCesta(prod)">
-                <div class="producto-body">
-                  <h4 class="producto-nombre">{{ prod.nombreProducto }}</h4>
-                  @if (prod.descripcionProducto) {
-                    <p class="producto-desc">{{ prod.descripcionProducto }}</p>
-                  }
-                  <span class="producto-precio">S/ {{ prod.precioProducto.toFixed(2) }}</span>
-                </div>
-                <button class="btn-add" (click)="agregarAlCarrito(prod)">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </div>
-            }
+  <!-- Modal para seleccionar lugar/mesa manualmente -->
+  <div class="modal-overlay" *ngIf="modalLugaresAbierto" (click)="cerrarModalLugares()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-chair"></i> Seleccionar Mesa / Lugar</h3>
+        <button class="btn-close" (click)="cerrarModalLugares()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        @if (lugares.length === 0) {
+          <div class="empty-state">
+            <i class="fa-solid fa-chair"></i>
+            <p>No hay mesas/lugares disponibles</p>
           </div>
-        </section>
-      }
-    </main>
+        } @else {
+          <ul class="lugares-lista">
+            @for (lugar of lugares; track lugar.idLugar) {
+              @if (lugar.tipoLugar === 'MESA') {
+                <li class="lugar-item" (click)="seleccionarLugar(lugar)">
+                  <div class="lugar-info">
+                    <i class="fa-solid fa-table"></i>
+                    <div>
+                      <span class="lugar-nombre">{{ lugar.nombreLugar }}</span>
+                    </div>
+                  </div>
+                  <i class="fa-solid fa-chevron-right"></i>
+                </li>
+              }
+            }
+          </ul>
+        }
+      </div>
+    </div>
   </div>
 </div>
