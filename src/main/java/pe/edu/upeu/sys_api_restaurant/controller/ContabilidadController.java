@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @RequestMapping("/api/contabilidad")
 @RequiredArgsConstructor
 public class ContabilidadController {
-
     private final ContabilidadService service;
 
     @GetMapping("/ventas-diarias")

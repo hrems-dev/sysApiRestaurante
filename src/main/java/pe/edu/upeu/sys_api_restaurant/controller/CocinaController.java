@@ -21,7 +21,6 @@ public class CocinaController {
     public ResponseEntity<List<CocinaPedidoResponse>> listarPendientes() {
         return ResponseEntity.ok(service.listarPedidosPendientes());
     }
-
     @GetMapping("/preparacion")
     public ResponseEntity<List<CocinaPedidoResponse>> listarPreparacion() {
         return ResponseEntity.ok(service.listarPedidosEnPreparacion());

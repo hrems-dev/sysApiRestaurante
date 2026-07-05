@@ -11,6 +11,7 @@ import pe.edu.upeu.sys_api_restaurant.service.LugarAtencionService;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/lugares")
 @RequiredArgsConstructor

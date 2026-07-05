@@ -9,6 +9,7 @@ import pe.edu.upeu.sys_api_restaurant.dto.QRLugarRequest;
 import pe.edu.upeu.sys_api_restaurant.dto.QRLugarResponse;
 import pe.edu.upeu.sys_api_restaurant.service.QRLugarService;
 
+
 @RestController
 @RequestMapping("/api/qr")
 @RequiredArgsConstructor
