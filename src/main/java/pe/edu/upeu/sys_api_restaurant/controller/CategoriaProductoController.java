@@ -17,7 +17,6 @@ import java.util.List;
 public class CategoriaProductoController {
 
     private final CategoriaProductoService service;
-
     @GetMapping
     public ResponseEntity<List<CategoriaProductoResponse>> findAll() {
         return ResponseEntity.ok(service.findAll());

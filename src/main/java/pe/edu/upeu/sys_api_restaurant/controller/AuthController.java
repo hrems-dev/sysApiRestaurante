@@ -22,7 +22,6 @@ import pe.edu.upeu.sys_api_restaurant.security.JwtService;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
     private final AuthenticationManager authenticationManager;
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;

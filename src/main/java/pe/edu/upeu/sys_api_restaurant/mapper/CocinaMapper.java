@@ -12,6 +12,7 @@ import java.util.Optional;
 public class CocinaMapper {
 
     public static CocinaPedidoResponse toCocinaPedidoResponse(Pedido pedido) {
+
         List<CocinaDetalleDTO> detalles = Optional.ofNullable(pedido.getDetalles())
                 .orElse(List.of())
                 .stream()

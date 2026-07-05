@@ -1,13 +1,11 @@
 package pe.edu.upeu.sys_api_restaurant.mapper;
 
-import org.springframework.stereotype.Component;
 import pe.edu.upeu.sys_api_restaurant.dto.DetallePedidoResponse;
 import pe.edu.upeu.sys_api_restaurant.dto.PedidoResponse;
 import pe.edu.upeu.sys_api_restaurant.entity.DetallePedido;
 import pe.edu.upeu.sys_api_restaurant.entity.Pedido;
 import pe.edu.upeu.sys_api_restaurant.entity.Producto;
 
-@Component
 public class PedidoMapper {
 
     public static PedidoResponse toPedidoResponse(Pedido entity) {

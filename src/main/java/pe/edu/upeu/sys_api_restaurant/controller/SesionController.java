@@ -11,6 +11,7 @@ import pe.edu.upeu.sys_api_restaurant.service.AuthService;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+
 public class SesionController {
 
     private final AuthService authService;

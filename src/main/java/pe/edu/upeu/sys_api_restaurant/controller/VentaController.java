@@ -17,6 +17,7 @@ public class VentaController {
 
     private final VentaService service;
 
+
     @GetMapping
     public ResponseEntity<List<VentaResponse>> findAll() {
         return ResponseEntity.ok(service.findAll());

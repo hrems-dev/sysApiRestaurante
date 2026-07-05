@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/reportes")
 @RequiredArgsConstructor
+
 public class ReporteController {
 
     private final ReporteVentasService reporteVentasService;

@@ -24,7 +24,6 @@ public class DeliveryController {
     public ResponseEntity<List<DeliveryResponse>> listarPedidosDelivery() {
         return ResponseEntity.ok(service.listarPedidosDelivery());
     }
-
     @GetMapping("/seguimiento/{idPedido}")
     public ResponseEntity<SeguimientoDeliveryResponse> obtenerSeguimiento(@PathVariable Integer idPedido) {
         return ResponseEntity.ok(service.obtenerSeguimiento(idPedido));
