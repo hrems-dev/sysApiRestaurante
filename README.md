@@ -1,266 +1,358 @@
-# sysApiRestaurante
+# Documento General del Proyecto
 
-Construccion de Sisytema
+## Portada
 
-## objetivo
+- Universidad: [Completar]
+- Facultad: [Completar]
+- Carrera: [Completar]
+- Título del proyecto: Sistema de Gestión Integral para Restaurante
+- Integrantes: [Completar]
+- Docente: [Completar]
+- Fecha: 05 de julio de 2026
 
-## alcance
+---
 
-## arquitectura
+## Índice
 
-[ 1 - modulos](docs/modulos.md)<br>
-[ 2 - bloques](docs/modulos.md) <br>
-| [ a - bloque](docs/blocs/1-bloque.md) <br>
-| [ b - bloque](docs/blocs/2-bloque.md) <br>
-| [ c - bloque](docs/blocs/3-bloque.md)
+- [1. Introducción](#1-introducción)
+- [2. Objetivo del proyecto](#2-objetivo-del-proyecto)
+- [3. Arquitectura general](#3-arquitectura-general)
+- [4. Módulos principales](#4-módulos-principales)
+- [5. Flujo de negocio principal](#5-flujo-de-negocio-principal)
+- [6. Tecnologías utilizadas](#6-tecnologías-utilizadas)
+- [7. Manual de usuario](#7-manual-de-usuario)
+- [8. Perfiles de usuario](#8-perfiles-de-usuario)
+- [9. Glosario](#9-glosario)
 
-## Base de datos
+---
 
-# Base de datos del restaurante
+# Capítulo 1. Documentación Técnica del Proyecto
 
-## 1. Rol
+## 1. Introducción
 
-```sql
-Rol(
-  idRol INT AUTO_INCREMENT PK,
-  nombreRol VARCHAR(50) NOT NULL,
-  descripcionRol VARCHAR(150) NULL,
-  estadoRol BOOLEAN NOT NULL DEFAULT TRUE
-)
-```
+El proyecto SysApiRestaurante es una solución web orientada a la gestión integral de un restaurante. El sistema permite administrar usuarios, mesas, productos, pedidos, pagos, reservas, delivery, cocina, ventas, reportes y notificaciones desde una arquitectura basada en backend y frontend separados.
 
-## 2. Usuario
+El objetivo principal es digitalizar los procesos operativos del restaurante, mejorar la experiencia del cliente y optimizar la coordinación entre el personal de cocina, meseros, repartidores y administración.
 
-```sql
-Usuario(
-  idUsuario INT AUTO_INCREMENT PK,
-  idRol INT NOT NULL FK,
-  nombreUsuario VARCHAR(50) NOT NULL UNIQUE,
-  nombres VARCHAR(80) NOT NULL,
-  apellidos VARCHAR(80) NOT NULL,
-  email VARCHAR(100) NOT NULL UNIQUE,
-  passwordHash VARCHAR(255) NOT NULL,
-  telefono VARCHAR(20) NULL,
-  estadoUsuario BOOLEAN NOT NULL DEFAULT TRUE,
-  fechaCreacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  ultimoAcceso TIMESTAMP NULL
-)
-```
+---
 
-## 3. LugarAtencion
+## 2. Objetivo del proyecto
 
-```sql
-LugarAtencion(
-  idLugar INT AUTO_INCREMENT PK,
-  nombreLugar VARCHAR(80) NOT NULL,
-  tipoLugar ENUM('mesa','salon','terraza','recojo','despacho') NOT NULL,
-  direccion VARCHAR(200) NULL,
-  capacidadMaxima INT NULL,
-  estadoLugar BOOLEAN NOT NULL DEFAULT TRUE,
-  observacion VARCHAR(255) NULL
-)
-```
+El sistema busca:
 
-## 4. QRLugar
+- Automatizar la gestión de pedidos y pagos.
+- Facilitar la operación del restaurante en tiempo real.
+- Permitir la atención presencial y a domicilio.
+- Integrar procesos de reservas, ventas y reportes.
+- Proporcionar una base escalable para futuras mejoras del negocio.
 
-```sql
-QRLugar(
-  idQR INT AUTO_INCREMENT PK,
-  idLugar INT NOT NULL FK,
-  codigoQR VARCHAR(255) NOT NULL UNIQUE,
-  urlQR VARCHAR(255) NULL,
-  fechaGeneracion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  fechaCaducidad TIMESTAMP NULL,
-  estadoQR BOOLEAN NOT NULL DEFAULT TRUE
-)
-```
+---
 
-## 5. MetodoPago
+## 3. Arquitectura general
 
-```sql
-MetodoPago(
-  idMetodoPago INT AUTO_INCREMENT PK,
-  nombreMetodo VARCHAR(60) NOT NULL UNIQUE,
-  descripcionMetodo VARCHAR(150) NULL,
-  estadoMetodo BOOLEAN NOT NULL DEFAULT TRUE
-)
-```
+El proyecto está conformado por tres capas principales:
 
-## 6. CategoriaProducto
+1. Frontend Angular
+    - Aplicación web para usuarios finales y operadores.
+    - Permite la interacción con menús, pedidos, reservas, paneles de cocina, delivery y administración.
 
-```sql
-CategoriaProducto(
-  idCategoria INT AUTO_INCREMENT PK,
-  nombreCategoria VARCHAR(80) NOT NULL UNIQUE,
-  descripcionCategoria VARCHAR(150) NULL,
-  estadoCategoria BOOLEAN NOT NULL DEFAULT TRUE
-)
-```
+2. Backend Spring Boot
+    - Expone APIs REST para la lógica del negocio.
+    - Gestiona autenticación, validaciones, servicios, persistencia y reglas de negocio.
 
-## 7. Producto
+3. Base de datos PostgreSQL
+    - Almacena usuarios, roles, productos, pedidos, pagos, reservas, ventas y notificaciones.
+    - Se gestiona mediante JPA/Hibernate y contenedores Docker.
 
-```sql
-Producto(
-  idProducto INT AUTO_INCREMENT PK,
-  idCategoria INT NOT NULL FK,
-  nombreProducto VARCHAR(100) NOT NULL,
-  descripcionProducto VARCHAR(255) NULL,
-  precioProducto DECIMAL(10,2) NOT NULL,
-  stockProducto INT NOT NULL DEFAULT 0,
-  imagenProducto VARCHAR(255) NULL,
-  estadoProducto BOOLEAN NOT NULL DEFAULT TRUE
-)
-```
+### Arquitectura propuesta
 
-## 8. Reserva
+**Pegar imagen aquí**
 
-```sql
-Reserva(
-  idReserva INT AUTO_INCREMENT PK,
-  idUsuario INT NOT NULL FK,
-  idLugar INT NOT NULL FK,
-  fechaHoraReserva DATETIME NOT NULL,
-  cantidadPersonas INT NOT NULL,
-  estadoReserva ENUM('pendiente','confirmada','cancelada','completada') NOT NULL DEFAULT 'pendiente',
-  adelantoReserva DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-  observacionReserva VARCHAR(255) NULL,
-  fechaCreacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
-```
+**Figura 1. Arquitectura general del sistema**
 
-## 9. Pago
+La arquitectura está diseñada para separar responsabilidades entre:
 
-```sql
-Pago(
-  idPago INT AUTO_INCREMENT PK,
-  idMetodoPago INT NOT NULL FK,
-  codigoPago VARCHAR(100) NOT NULL UNIQUE,
-  montoPago DECIMAL(10,2) NOT NULL,
-  estadoPago ENUM('pendiente','aprobado','rechazado','reembolsado') NOT NULL DEFAULT 'pendiente',
-  fechaPago TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  referenciaPago VARCHAR(120) NULL,
-  validadoPorUsuario INT NULL FK
-)
-```
+- Frontend: experiencia de usuario e interacción visual.
+- Backend: procesamiento y reglas de negocio.
+- Base de datos: persistencia y consistencia de datos.
+- Seguridad: autenticación con JWT y control por roles.
 
-## 10. ReservaPago
+---
 
-```sql
-ReservaPago(
-  idReservaPago INT AUTO_INCREMENT PK,
-  idReserva INT NOT NULL FK,
-  idPago INT NOT NULL FK,
-  montoAplicado DECIMAL(10,2) NOT NULL,
-  estadoPagoReserva ENUM('pendiente','aprobado','rechazado') NOT NULL DEFAULT 'pendiente',
-  fechaAplicacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
-```
+## 4. Módulos principales
 
-## 11. Pedido
+El sistema está organizado por módulos funcionales, entre los más importantes se encuentran:
 
-```sql
-Pedido(
-  idPedido INT AUTO_INCREMENT PK,
-  idUsuario INT NOT NULL FK,
-  idLugar INT NULL FK,
-  idRepartidor INT NULL FK,
-  tipoPedido ENUM('local','delivery','recojo') NOT NULL DEFAULT 'local',
-  estadoPedido ENUM('pendiente','aceptado','en_preparacion','en_camino','entregado','cancelado') NOT NULL DEFAULT 'pendiente',
-  direccionEntrega VARCHAR(255) NULL,
-  observacionPedido VARCHAR(255) NULL,
-  fechaHoraPedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  totalPedido DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-  pagado BOOLEAN NOT NULL DEFAULT FALSE
-)
-```
+- Autenticación y usuarios
+- Onboarding y configuración inicial
+- Lugares de atención y mesas
+- Gestión de productos y categorías
+- Pedidos y detalle de pedidos
+- Reservas
+- Pagos y ventas
+- Cocina
+- Delivery y seguimiento
+- Facturación y reportes
+- Notificaciones
 
-## 12. DetallePedido
+### 4.1 Módulos del backend
 
-```sql
-DetallePedido(
-  idDetalle INT AUTO_INCREMENT PK,
-  idPedido INT NOT NULL FK,
-  idProducto INT NOT NULL FK,
-  cantidad INT NOT NULL DEFAULT 1,
-  precioUnitario DECIMAL(10,2) NOT NULL,
-  subtotal DECIMAL(10,2) GENERATED ALWAYS AS (cantidad * precioUnitario) STORED,
-  observacionDetalle VARCHAR(255) NULL,
-  estadoDetalle BOOLEAN NOT NULL DEFAULT TRUE
-)
-```
+El backend está pensado bajo una estructura modular con capas como:
 
-## 13. DocVenta
+- Controller
+- Service
+- Repository
+- Entity
+- DTO
+- Mapper
+- Security
 
-```sql
-DocVenta(
-  idDocVenta INT AUTO_INCREMENT PK,
-  tipoDocumento ENUM('boleta','factura','ticket') NOT NULL DEFAULT 'boleta',
-  serie VARCHAR(10) NOT NULL,
-  numero VARCHAR(20) NOT NULL,
-  fechaEmision TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  estadoDocumento BOOLEAN NOT NULL DEFAULT TRUE,
-  UNIQUE(serie, numero)
-)
-```
+### 4.2 Módulos del frontend
 
-## 14. Venta
+La interfaz web agrupa funcionalidades por áreas como:
 
-```sql
-Venta(
-  idVenta INT AUTO_INCREMENT PK,
-  idPedido INT NOT NULL UNIQUE FK,
-  idPago INT NOT NULL FK,
-  idDocVenta INT NOT NULL FK,
-  totalVenta DECIMAL(10,2) NOT NULL,
-  fechaVenta TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  estadoVenta ENUM('abierta','cerrada','anulada') NOT NULL DEFAULT 'cerrada'
-)
-```
+- auth
+- dashboard
+- pedidos
+- productos
+- categorias
+- reservas
+- mesas
+- mesas-qr
+- pagos
+- delivery
+- cocina
+- facturacion
+- reportes
+- usuarios
+- roles
+- configuracion
 
-## 15. Notificacion
+---
 
-```sql
-Notificacion(
-  idNotificacion INT AUTO_INCREMENT PK,
-  idUsuario INT NOT NULL FK,
-  idPedido INT NULL FK,
-  idVenta INT NULL FK,
-  tipoNotificacion ENUM('pedido','pago','reserva','delivery','sistema') NOT NULL DEFAULT 'sistema',
-  titulo VARCHAR(120) NOT NULL,
-  descripcion VARCHAR(255) NOT NULL,
-  leido BOOLEAN NOT NULL DEFAULT FALSE,
-  fechaNotificacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
-```
+## 5. Flujo de negocio principal
 
-## 16. Recomendaciones de mejora
+El flujo general del sistema funciona de la siguiente manera:
 
-```text
-- Separar nombres de campos en español y con consistencia.
-- Usar un solo nombre para "LugarAtencion" en todo el sistema.
-- No duplicar pago dentro de detalle_pedido.
-- Mantener reserva, pedido, pago y venta como procesos distintos.
-- Agregar índices en todas las llaves foráneas.
-- Crear reglas UNIQUE para códigos, correos y usernames.
-- Usar ENUM solo donde el valor sea realmente fijo.
-```
+1. El cliente accede al sistema desde el menú público o desde una mesa identificada por QR.
+2. Selecciona productos y crea un pedido.
+3. El pedido se procesa y se envía a cocina.
+4. Cocina actualiza el estado del pedido hasta marcarlo como listo.
+5. El mesero o repartidor realiza la entrega o el seguimiento correspondiente.
+6. Se registra el pago y se genera la venta asociada.
+7. El sistema emite notificaciones y reportes de seguimiento.
 
-## 17. Orden sugerido de creación
+### Diagrama de secuencia
 
-```text
-1. Rol
-2. LugarAtencion
-3. MetodoPago
-4. CategoriaProducto
-5. Usuario
-6. QRLugar
-7. Producto
-8. Reserva
-9. Pago
-10. ReservaPago
-11. Pedido
-12. DetallePedido
-13. DocVenta
-14. Venta
-15. Notificacion
-```
+**Pegar imagen aquí**
+
+**Figura 2. Diagrama de secuencia del flujo principal**
+
+---
+
+## 6. Tecnologías utilizadas
+
+### Backend
+
+- Java 21
+- Spring Boot 4.1.0
+- Spring Security
+- Spring Data JPA
+- Hibernate
+- JWT
+- PostgreSQL
+- Docker Compose
+- Lombok
+- Apache POI
+
+### Frontend
+
+- Angular 20
+- TypeScript
+- RxJS
+- HTML5 QR Code
+- SCSS
+
+### Infraestructura
+
+- Contenedores Docker
+- Gradle
+- Git
+
+---
+
+# Capítulo 2. Manual de Usuario
+
+## 1. Introducción
+
+Esta sección presenta una guía general para que los usuarios puedan interactuar con el sistema según su rol. La aplicación está orientada a facilitar la operación del restaurante desde una única plataforma.
+
+---
+
+## 2. Objetivo
+
+Permitir que cada tipo de usuario realice sus tareas de manera eficiente, rápida y segura.
+
+---
+
+## 3. Perfiles del sistema
+
+El sistema contempla los siguientes perfiles:
+
+- Administrador
+- Cliente
+- Mesero
+- Cocina
+- Repartidor
+- Contabilidad
+
+---
+
+## 4. Ingreso al aplicativo
+
+El acceso al sistema se realiza mediante credenciales de usuario. El administrador configura los roles y permisos iniciales, mientras que el resto de usuarios accede según su función específica.
+
+**Pegar imagen aquí**
+
+**Figura 3. Pantalla de ingreso**
+
+---
+
+## 5. Perfil Administrador
+
+### 5.1 Pantalla principal
+
+El administrador puede visualizar el estado general del negocio, gestionar usuarios, definir roles, configurar módulos y revisar reportes.
+
+**Pegar imagen aquí**
+
+### 5.2 Menús principales
+
+- Usuarios
+- Roles
+- Productos
+- Pedidos
+- Reservas
+- Reportes
+- Configuración
+
+### 5.3 Funcionalidades principales
+
+- Gestión de usuarios y permisos
+- Administración de productos y categorías
+- Control de pedidos y pagos
+- Monitoreo de reportes y ventas
+- Configuración del sistema
+
+### 5.4 Preguntas frecuentes
+
+- ¿Cómo creo un nuevo usuario?  
+  Se accede al módulo de usuarios y se registra con el rol correspondiente.
+
+- ¿Cómo revisar ventas?  
+  Desde el módulo de reportes o contabilidad se pueden consultar los registros disponibles.
+
+---
+
+## 6. Perfil Cliente
+
+### 6.1 Pantalla principal
+
+El cliente puede visualizar el menú, realizar pedidos y, en algunos casos, acceder a reservas o pedidos por delivery.
+
+**Pegar imagen aquí**
+
+### 6.2 Menús
+
+- Menú público
+- Pedidos
+- Reservas
+
+### 6.3 Funcionalidades
+
+- Explorar productos
+- Agregar al carrito
+- Enviar pedidos
+- Consultar el estado del pedido
+
+### 6.4 Preguntas frecuentes
+
+- ¿Cómo realizo un pedido?  
+  Se seleccionan los productos y se confirma la orden.
+
+- ¿Cómo sé el estado de mi pedido?  
+  El sistema muestra el estado de preparación, listo y entrega.
+
+---
+
+## 7. Perfil Mesero
+
+### 7.1 Pantalla principal
+
+El mesero gestiona pedidos en mesa, verifica estado de las órdenes y apoya la atención al cliente.
+
+**Pegar imagen aquí**
+
+### 7.2 Menús
+
+- Pedidos
+- Mesas
+- Cobros
+
+### 7.3 Funcionalidades
+
+- Crear o actualizar pedidos
+- Ver pedidos activos
+- Marcar pedidos como servidos o entregados
+- Apoyar el proceso de atención presencial
+
+---
+
+## 8. Perfil Cocina
+
+### 8.1 Pantalla principal
+
+La cocina visualiza la cola de pedidos pendientes y avanza los estados de preparación.
+
+**Pegar imagen aquí**
+
+### 8.2 Funcionalidades
+
+- Ver pedidos en preparación
+- Marcar pedidos como listos
+- Organizar la preparación de los productos
+
+---
+
+## 9. Perfil Repartidor
+
+### 9.1 Pantalla principal
+
+El repartidor gestiona los pedidos delivery, su ruta de entrega y el estado de seguimiento.
+
+**Pegar imagen aquí**
+
+### 9.2 Funcionalidades
+
+- Visualizar pedidos asignados
+- Marcar como recogidos o entregados
+- Seguimiento del delivery
+
+---
+
+## 10. Glosario
+
+- JWT: mecanismo de autenticación basada en tokens.
+- DTO: objeto de transferencia de datos.
+- Endpoint: ruta expuesta por la API.
+- API: interfaz de comunicación entre frontend y backend.
+- Pedido: orden de consumo del cliente.
+- Pago: registro de la transacción del pedido.
+- Reserva: solicitud de atención futura en el restaurante.
+- Venta: cierre o registro de una operación comercial.
+- Delivery: modalidad de entrega a domicilio.
+- QR: código para acceso rápido o identificación de mesa.
+
+---
+
+Este documento es un resumen general del proyecto y debe actualizarse conforme evolucione el sistema.
