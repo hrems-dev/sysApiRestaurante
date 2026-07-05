@@ -1,14 +1,8 @@
 package pe.edu.upeu.sys_api_restaurant.mapper;
 
-import org.springframework.stereotype.Component;
-import pe.edu.upeu.sys_api_restaurant.dto.ReservaPagoRequest;
-import pe.edu.upeu.sys_api_restaurant.dto.ReservaPagoResponse;
-import pe.edu.upeu.sys_api_restaurant.dto.ReservaRequest;
-import pe.edu.upeu.sys_api_restaurant.dto.ReservaResponse;
-import pe.edu.upeu.sys_api_restaurant.entity.Reserva;
-import pe.edu.upeu.sys_api_restaurant.entity.ReservaPago;
+import pe.edu.upeu.sys_api_restaurant.dto.*;
+import pe.edu.upeu.sys_api_restaurant.entity.*;
 
-@Component
 public class ReservaMapper {
 
     public static ReservaResponse toReservaResponse(Reserva entity) {

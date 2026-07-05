@@ -1,10 +1,8 @@
 package pe.edu.upeu.sys_api_restaurant.mapper;
 
-import org.springframework.stereotype.Component;
 import pe.edu.upeu.sys_api_restaurant.dto.*;
 import pe.edu.upeu.sys_api_restaurant.entity.*;
 
-@Component
 public class ConfiguracionMapper {
 
     public static ConfiguracionResponse toConfiguracionResponse(Configuracion entity) {

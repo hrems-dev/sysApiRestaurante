@@ -1,11 +1,9 @@
 package pe.edu.upeu.sys_api_restaurant.mapper;
 
-import org.springframework.stereotype.Component;
 import pe.edu.upeu.sys_api_restaurant.dto.PagoRequest;
 import pe.edu.upeu.sys_api_restaurant.dto.PagoResponse;
 import pe.edu.upeu.sys_api_restaurant.entity.Pago;
 
-@Component
 public class PagoMapper {
 
     public static PagoResponse toPagoResponse(Pago entity) {

@@ -1,12 +1,10 @@
 package pe.edu.upeu.sys_api_restaurant.mapper;
 
-import org.springframework.stereotype.Component;
 import pe.edu.upeu.sys_api_restaurant.dto.LugarAtencionResponse;
 import pe.edu.upeu.sys_api_restaurant.dto.QRLugarResponse;
 import pe.edu.upeu.sys_api_restaurant.entity.LugarAtencion;
 import pe.edu.upeu.sys_api_restaurant.entity.QRLugar;
 
-@Component
 public class LugarAtencionMapper {
 
     public static LugarAtencionResponse toLugarAtencionResponse(LugarAtencion entity) {
